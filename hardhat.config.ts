@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -18,41 +19,41 @@ import '@typechain/hardhat'
 
 // Networks
 
-interface NetworkConfig {
-  network: string
-  chainId: number
-  gas?: number | 'auto'
-  gasPrice?: number | 'auto'
-}
+// interface NetworkConfig {
+//   network: string
+//   chainId: number
+//   gas?: number | 'auto'
+//   gasPrice?: number | 'auto'
+// }
 
-const networkConfigs: NetworkConfig[] = [
-  { network: 'mainnet', chainId: 1 },
-  { network: 'ropsten', chainId: 3 },
-  { network: 'rinkeby', chainId: 4 },
-  { network: 'kovan', chainId: 42 },
-]
+// const networkConfigs: NetworkConfig[] = [
+//   { network: 'mainnet', chainId: 1 },
+//   { network: 'ropsten', chainId: 3 },
+//   { network: 'rinkeby', chainId: 4 },
+//   { network: 'kovan', chainId: 42 },
+// ]
 
-function getAccountMnemonic() {
-  return process.env.MNEMONIC || ''
-}
+// function getAccountMnemonic() {
+//   return process.env.MNEMONIC || ''
+// }
 
-function getDefaultProviderURL(network: string) {
-  return `https://${network}.infura.io/v3/${process.env.INFURA_KEY}`
-}
+// function getDefaultProviderURL(network: string) {
+//   return `https://${network}.infura.io/v3/${process.env.INFURA_KEY}`
+// }
 
-function setupDefaultNetworkProviders(buidlerConfig) {
-  for (const netConfig of networkConfigs) {
-    buidlerConfig.networks[netConfig.network] = {
-      chainId: netConfig.chainId,
-      url: getDefaultProviderURL(netConfig.network),
-      gas: netConfig.gasPrice || 'auto',
-      gasPrice: netConfig.gasPrice || 'auto',
-      accounts: {
-        mnemonic: getAccountMnemonic(),
-      },
-    }
-  }
-}
+// function setupDefaultNetworkProviders(buidlerConfig) {
+//   for (const netConfig of networkConfigs) {
+//     buidlerConfig.networks[netConfig.network] = {
+//       chainId: netConfig.chainId,
+//       url: getDefaultProviderURL(netConfig.network),
+//       gas: netConfig.gasPrice || 'auto',
+//       gasPrice: netConfig.gasPrice || 'auto',
+//       accounts: {
+//         mnemonic: getAccountMnemonic(),
+//       },
+//     }
+//   }
+// }
 
 // Tasks
 
@@ -89,8 +90,14 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  defaultNetwork: 'hardhat',
+  defaultNetwork: 'rinkeby',
   networks: {
+    rinkeby: {
+      url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+      accounts: {
+        mnemonic: 'spy oblige silent public quiz depth thank age earn atom eagle awesome',
+      },
+    },
     hardhat: {
       chainId: 1337,
       loggingEnabled: false,
@@ -109,32 +116,32 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS ? true : false,
-    showTimeSpent: true,
-    currency: 'USD',
-    outputFile: 'reports/gas-report.log',
-  },
-  typechain: {
-    outDir: 'build/types',
-    target: 'ethers-v5',
-  },
-  abiExporter: {
-    path: './build/abis',
-    clear: false,
-    flat: true,
-  },
-  tenderly: {
-    project: process.env.TENDERLY_PROJECT,
-    username: process.env.TENDERLY_USERNAME,
-  },
-  contractSizer: {
-    alphaSort: true,
-    runOnCompile: false,
-    disambiguatePaths: true,
-  },
+  // gasReporter: {
+  //   enabled: process.env.REPORT_GAS ? true : false,
+  //   showTimeSpent: true,
+  //   currency: 'USD',
+  //   outputFile: 'reports/gas-report.log',
+  // },
+  // typechain: {
+  //   outDir: 'build/types',
+  //   target: 'ethers-v5',
+  // },
+  // abiExporter: {
+  //   path: './build/abis',
+  //   clear: false,
+  //   flat: true,
+  // },
+  // tenderly: {
+  //   project: process.env.TENDERLY_PROJECT,
+  //   username: process.env.TENDERLY_USERNAME,
+  // },
+  // contractSizer: {
+  //   alphaSort: true,
+  //   runOnCompile: false,
+  //   disambiguatePaths: true,
+  // },
 }
 
-setupDefaultNetworkProviders(config)
+// setupDefaultNetworkProviders(config)
 
 export default config

@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 import '@nomiclabs/hardhat-ethers'
 import { ethers } from 'hardhat'
 
 async function main() {
-  const factory = await ethers.getContractFactory('Counter')
+  const factory = await ethers.getContractFactory('ETHPool')
 
   // If we had constructor arguments, they would be passed into deploy()
   const contract = await factory.deploy()
